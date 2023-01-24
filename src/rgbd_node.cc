@@ -99,6 +99,8 @@ void ImageGrabber::GrabRGBD(const sensor_msgs::ImageConstPtr& msgRGB,const senso
     
     // ORB-SLAM3 runs in TrackRGBD()
     Sophus::SE3f Tcw = mpSLAM->TrackRGBD(cv_ptrRGB->image, cv_ptrD->image, cv_ptrRGB->header.stamp.toSec());
+    int state = mpSLAM->GetTrackingState();
+    if(state!=2) return;
     Sophus::SE3f Twc = Tcw.inverse();
 
     ros::Time msg_time = cv_ptrRGB->header.stamp;
